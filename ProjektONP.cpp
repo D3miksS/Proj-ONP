@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string.h>
 using namespace std;
 
@@ -36,8 +36,8 @@ void  checkPriority(string &formula, short &d, short *piorytet ) {
 		maxId - zwaraca zmienną z nr pozycji największej liczby z tablicy "piorytet"
 */
 int searchMax(string &formula, short *piorytet, short &maxId) {
+	int max = 0;
 	for (int j = 0; j < formula.length(); j++) {
-		int max = 0;
 		if (piorytet[j] > max) {
 			max = piorytet[j];
 			maxId = j;
@@ -48,6 +48,89 @@ int searchMax(string &formula, short *piorytet, short &maxId) {
 
 //stos
 
+/*
+	Fuckcja dodająca na stos
+	in:
+		nn - dana do dopisania na stos
+		pp - flaga informująca o aktualnym położeniu n stosie
+		stoss - stos
+*/
+void na_stos(char &nn, int &pp, char *stoss) {
+	if (!czy_pelny(pp)) {
+		stoss[pp] = nn;
+		pp++;
+	}
+	else
+		;	// bląd stos pełny
+}
+
+/*
+	Fuckcja odczytująca aktualną daną ze stosu
+	in:
+		pp - flaga informująca o aktualnym położeniu n stosie
+		stoss - stos
+	out:
+		z - dana z góry stosu
+		-11 - kod błędu oznaczający, że stos jest pusty
+*/
+char ze_stosu(int &pp, char *stoss) {
+	char z;
+	if (!czy_pusty) {
+		z = stoss[pp];
+		pp--;
+		return z;
+	}
+	else
+		return -11; // błąd stos pusty 
+}
+
+/*
+	Fuckcja odczytująca aktualną daną ze stosu
+	in:
+		pp - flaga informująca o aktualnym położeniu n stosie
+	out:
+		true - stos jest pełny
+		false - stos nie jest pełny
+*/
+bool czy_pelny(int &pp) {
+	if (pp == 9)
+		return true;
+	else
+		return false;
+}
+
+/*
+	Fuckcja odczytująca aktualną daną ze stosu
+	in:
+		pp - flaga informująca o aktualnym położeniu n stosie
+	out:
+		true - stos jest pusty
+		false - stos nie jest pusty
+*/
+bool czy_pusty(int &pp) {
+	if (pp == -1)
+		return true;
+	else
+		return false;
+}
+
+/*
+	Fuckcja odczytująca aktualną daną ze stosu
+	in:
+		pp - flaga informująca o aktualnym położeniu n stosie
+		stoss - stos
+	out:
+		stos[pp] - dana z góry stosu
+		-11 - kod błędu oznaczający, że stos jest pusty
+*/
+char zobacz(int &pp, char *stoss) {
+	if (!czy_pusty) {
+		return	stoss[pp];;
+	}
+	else
+		return -11; // błąd stos pusty 
+}
+
 int main(void) {
 	setlocale(LC_CTYPE, "Polish");	// Polskie znaki w środku kodu
 
@@ -56,6 +139,9 @@ int main(void) {
 	short d = 0;
 	char onp[100] = { 0 };
 	short maxId = 0;
+	char stos[10] = { 0 };
+	char n;
+	int p = -1;
 
 	cout << "Podaj równanie.\n";
 	cin >> formula;
