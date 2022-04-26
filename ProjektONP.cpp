@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <conio.h>
+#include <locale.h>
 using namespace std;
 
 // Dominik Ficek
@@ -61,7 +62,7 @@ int search_max(string& formula, short* piorytet, short& maxId) {
 
 //stos
 /*
-	Fuckcja odczytująca aktualną daną ze stosu
+	Fuckcja odczytująca aktualną daną ze stosu w celu sprawdzenia czy jest pełny
 	in:
 		pp - flaga informująca o aktualnym położeniu n stosie
 	out:
@@ -76,7 +77,7 @@ bool czy_pelny(short& pp) {
 };
 
 /*
-	Fuckcja odczytująca aktualną daną ze stosu
+	Fuckcja odczytująca aktualną daną ze stosu w celu sprawdzenia czy jest pusty
 	in:
 		pp - flaga informująca o aktualnym położeniu n stosie
 	out:
@@ -109,7 +110,7 @@ void na_stos(double& nn, short& pp, double* stoss) {
 };
 
 /*
-	Fuckcja odczytująca aktualną daną ze stosu
+	Fuckcja odczytująca aktualną daną ze stosu w celu zdjęcia jej ze stosu
 	in:
 		pp - flaga informująca o aktualnym położeniu n stosie
 		stoss - stos
@@ -160,7 +161,57 @@ double zobacz(short& pp, double* stoss) {
 		NULL
 */
 void add_to_onp(short maxId, char* onp, string& formula, short* piorytety, short& onpI, short* ujemna, short* ujemnaOnp) {
-	
+	/*maxId = search_max(formula, piorytety, maxId);
+	short id1 = maxId + 1;
+	short id2 = maxId - 1;
+
+	if (czy_liczba(formula, id2) && piorytety[id2] >= 0) { // sprawdza lewe miejsce
+		if (ujemna[maxId] == -3) {
+			ujemnaOnp[ujemnaLicz] = -2;
+		};
+		onp[onpI] = formula[id2];
+		onpI++;
+		piorytety[id2] = -1;
+		ujemnaLicz++;
+	}
+	else if (formula[id2] == ')') {
+		if (ujemna[id2 - 1] == -2 && piorytety[id2 - 1] >= 0) {
+			ujemnaOnp[ujemnaLicz] = -2;
+			onp[onpI] = formula[id2 - 1];
+			onpI++;
+			piorytety[id2 - 1] = -1;
+		}
+		ujemnaLicz++;
+	};
+
+	if (czy_liczba(formula, id1) && piorytety[id1] >= 0) { //sprawdza prawe miejsce
+		if (ujemna[maxId] == -3) {
+			ujemnaOnp[ujemnaLicz] = -2;
+		};
+		onp[onpI] = formula[id1];
+		onpI++;
+		ujemnaLicz++;
+		piorytety[id1] = -1;
+	}
+	else if (formula[id1] == '(') {
+		if (formula[id1 + 1] == '-') {
+			if (ujemna[id1 + 2] == -2 && piorytety[id1 + 2] >= 0) {
+				ujemnaOnp[ujemnaLicz] = -2;
+				onp[onpI] = formula[id1 + 2];
+				onpI++;
+				piorytety[id1 + 2] = -1;
+			}
+		}
+		ujemnaLicz++;
+	};
+
+	if (ujemna[maxId] != -3) { // sprawdza znak
+		onp[onpI] = formula[maxId];
+		onpI++;
+		ujemnaLicz++;
+	};
+	piorytety[maxId] = -1;*/
+
 	maxId = search_max(formula, piorytety, maxId);
 	int id1 = maxId + 1;
 
@@ -186,7 +237,7 @@ void add_to_onp(short maxId, char* onp, string& formula, short* piorytety, short
 		};
 	};
 
-	// dodaj jedną z prawej od znaku
+	// dodaj jednÄ… z prawej od znaku
 	if (((formula[id1] > 47) && (formula[id1] < 58)) && piorytety[id1] >= 0) {
 		if (ujemna[maxId] == -3) {
 			ujemnaOnp[onpI] = -2;
@@ -476,8 +527,7 @@ void check_ujemna(string& formula, short* ujemna, short* piorytety) {
 	Funkcja wyświetlająca inforamcje o autorze
 */
 void info() {
-	char copyr = 169;
-	cout << "Autor: Dominik Ficek\nMUP Oświęcim\nInformatyka Rok I\nData: 2022\nWersja: 0.9\n";
+	cout << "Autor: Dominik Ficek\nMUP Oświęcim\nInformatyka Rok I\nData: 2022\nWersja: 0.95\n";
 };
 
 /*
@@ -485,12 +535,12 @@ void info() {
 */
 void instrukcja() {
 	cout << "-----Instrukcja-----\nDozwolone znaki do wpisania:\n# cyfry od 0 do 9\n# +, -, *, /, (, )\n\nZapis liczb ujemnych: (-3), (-8)\n\nPodstawowe zasady:\n";
-	cout << "# W nawiasach nie może być samej cyfry\n# Przed nawiasem nie może znajdować sie znak bez poprzedzającej go cyfry\n# Tylko wyżej wymienione znaki gwarantują poprawość wykonania działania\n\n";
+	cout << "# W nawiasach nie może być samej cyfry\n# Przed nawiasem nie może znajdować sie znak bez poprzedzającej go cyfry\n# Tylko wyżej wymienione znaki gwarantują poprawoność wykonania działania\n\n";
 	cout << "Przykładowe wyrażenie do obliczenia:\n(-2)*4-((5/2)*(-2))\n\nZapisy niedozwolone:\n# -(2*3)\n# a+2\n# 2-(3)\n\n";
 };
 
 int main(void) {
-	setlocale(LC_CTYPE, "Polish");	// Polskie znaki w środku kodu
+	setlocale(LC_CTYPE, "Polish");	// Polskie znaki w Ĺ›rodku kodu
 
 	short nr = 0;
 	menu(nr);
